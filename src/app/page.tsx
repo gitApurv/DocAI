@@ -2,7 +2,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "motion/react";
-import FeatueresGrid from "@/components/FeaturesGrid";
+import FeatueresGrid from "@/app/_components/FeaturesGrid";
+import { UserButton, useUser } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
   return (
@@ -54,23 +56,25 @@ export default function HomePage() {
           Triage symptoms, book appointments, and deliver empathetic care with
           voice-first automation.
         </motion.p>
-        <motion.div
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-          }}
-          transition={{
-            duration: 0.3,
-            delay: 1,
-          }}
-          className="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-4"
-        >
-          <button className="w-60 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200">
-            Explore Now
-          </button>
-        </motion.div>
+        <Link href="/sign-in">
+          <motion.div
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            transition={{
+              duration: 0.3,
+              delay: 1,
+            }}
+            className="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-4"
+          >
+            <button className="w-60 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200">
+              Explore Now
+            </button>
+          </motion.div>
+        </Link>
       </div>
       <FeatueresGrid />
     </div>
@@ -78,6 +82,8 @@ export default function HomePage() {
 }
 
 const Navbar = () => {
+  const { user } = useUser();
+
   return (
     <nav className="flex w-full items-center justify-between border-t border-b border-neutral-200 px-4 py-4 dark:border-neutral-800">
       <div className="flex items-center gap-2">
@@ -89,9 +95,18 @@ const Navbar = () => {
           </h1>
         </Link>
       </div>
-      <button className="w-24 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 md:w-32 dark:bg-white dark:text-black dark:hover:bg-gray-200">
-        Login
-      </button>
+      {!user ? (
+        <Link href="/sign-in">
+          <button className="w-24 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 md:w-32 dark:bg-white dark:text-black dark:hover:bg-gray-200">
+            Login
+          </button>
+        </Link>
+      ) : (
+        <div className="flex gap-5 items-center">
+          <Button>Dashboard</Button>
+          <UserButton />
+        </div>
+      )}
     </nav>
   );
 };

@@ -1,24 +1,7 @@
 import React from "react";
-import { BentoGrid, BentoGridItem } from "./ui/bento-grid";
+import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { FileText } from "lucide-react";
 import Image from "next/image";
-
-export default function FeatueresGrid() {
-  return (
-    <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem] pb-4">
-      {items.map((item, i) => (
-        <BentoGridItem
-          key={i}
-          title={item.title}
-          description={item.description}
-          header={item.header}
-          className={item.className}
-          icon={item.icon}
-        />
-      ))}
-    </BentoGrid>
-  );
-}
 
 const items = [
   {
@@ -97,3 +80,20 @@ const items = [
     icon: <FileText className="h-4 w-4 text-neutral-500" />,
   },
 ];
+
+export default function FeatueresGrid() {
+  return (
+    <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem] pb-4">
+      {items.map((item, i) => (
+        <BentoGridItem
+          key={i}
+          title={item.title}
+          description={item.description}
+          header={item.header}
+          className={item.className}
+          icon={item.icon}
+        />
+      ))}
+    </BentoGrid>
+  );
+}
