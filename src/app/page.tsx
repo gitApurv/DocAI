@@ -7,6 +7,8 @@ import { UserButton, useUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
+  const { user } = useUser();
+
   return (
     <div className="relative flex  flex-col items-center justify-center">
       <Navbar />
@@ -56,7 +58,7 @@ export default function HomePage() {
           Triage symptoms, book appointments, and deliver empathetic care with
           voice-first automation.
         </motion.p>
-        <Link href="/sign-in">
+        <Link href={user ? "/dashboard" : "/sign-in"}>
           <motion.div
             initial={{
               opacity: 0,
@@ -85,25 +87,23 @@ const Navbar = () => {
   const { user } = useUser();
 
   return (
-    <nav className="flex w-full items-center justify-between border-t border-b border-neutral-200 px-4 py-4 dark:border-neutral-800">
+    <nav className="flex w-full items-center justify-between border-t border-b border-neutral-200 px-10 md:px-20 py-4 dark:border-neutral-800 shadow-md">
       <div className="flex items-center gap-2">
-        <Link href="/" className="flex items-center gap-2 cursor-pointer">
-          <Image src="/images/Logo.png" alt="Logo" width={40} height={40} />
-          <h1 className="text-base font-bold md:text-2xl">
-            <span className="text-blue-950 mr-1">Doc</span>
-            <span className="text-green-500">AI</span>
-          </h1>
-        </Link>
+        <Image src="/images/Logo.png" alt="Logo" width={50} height={50} />
+        <h1 className="text-base font-bold md:text-2xl">
+          <span className="text-blue-950 mr-1">Doc</span>
+          <span className="text-green-500">AI</span>
+        </h1>
       </div>
       {!user ? (
         <Link href="/sign-in">
-          <button className="w-24 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 md:w-32 dark:bg-white dark:text-black dark:hover:bg-gray-200">
-            Login
-          </button>
+          <Button className="cursor-pointer">Login</Button>
         </Link>
       ) : (
         <div className="flex gap-5 items-center">
-          <Button>Dashboard</Button>
+          <Link href="/dashboard">
+            <Button className="cursor-pointer">Dashboard</Button>
+          </Link>
           <UserButton />
         </div>
       )}
