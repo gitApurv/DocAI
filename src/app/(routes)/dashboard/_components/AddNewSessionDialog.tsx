@@ -16,12 +16,14 @@ import { useState } from "react";
 import axios from "axios";
 import SuggestedDoctorAgentCard from "./SuggestedDoctorAgentCard";
 import Agent from "@/types/agent";
+import { useRouter } from "next/navigation";
 
 export function AddNewSessionDialog() {
   const [details, setDetails] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [suggestedAgents, setSuggestedAgents] = useState<Agent[] | null>(null);
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
+  const router = useRouter();
 
   const handleStartConsultation = async () => {
     setLoading(true);
@@ -30,7 +32,7 @@ export function AddNewSessionDialog() {
         details,
         selectedAgent,
       });
-      console.log(response.data);
+      router.push(`/dashboard/session/${response.data.sessionId}`);
     } catch (error) {
       console.log(error);
     } finally {
@@ -45,8 +47,6 @@ export function AddNewSessionDialog() {
         details,
       });
       setSuggestedAgents(response.data);
-      setDetails("");
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     } finally {

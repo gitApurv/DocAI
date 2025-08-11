@@ -1,6 +1,7 @@
 import { db } from "@/config/db";
 import { sessionChatsTable } from "@/config/schema";
 import { currentUser } from "@clerk/nextjs/server";
+import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import { v4 as uuid } from "uuid";
 
@@ -27,4 +28,14 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const sessionId = searchParams.get("sessionId") || "";
+  const result = await db
+    .select()
+    .from(sessionChatsTable)
+    .where(eq(sessionChatsTable.sessionId, sessionId));
+  return NextResponse.json(result[0]);
 }
