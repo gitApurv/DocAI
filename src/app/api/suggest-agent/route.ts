@@ -1,4 +1,4 @@
-import { AIDoctorAgents } from "@/AIDoctorAgents";
+import { AIDoctorAgents } from "@/AIMedicalAgents";
 import { NextRequest, NextResponse } from "next/server";
 import { ai } from "@/config/openAIModel";
 

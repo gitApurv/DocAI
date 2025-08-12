@@ -20,7 +20,6 @@ export async function POST(req: NextRequest) {
         createdOn: new Date().toString(),
       })
       .returning();
-
     return NextResponse.json(result[0]);
   } catch (error) {
     return NextResponse.json(

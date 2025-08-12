@@ -17,7 +17,7 @@ export default function Provider({
     if (user) {
       createUser();
     }
-  }, []);
+  }, [user]);
 
   const createUser = async () => {
     try {

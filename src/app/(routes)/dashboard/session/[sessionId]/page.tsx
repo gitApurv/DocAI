@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Vapi from "@vapi-ai/web";
 import Message from "@/types/message";
+import { CreateAssistantDTO } from "@vapi-ai/web/dist/api";
 
 const SessionPage = () => {
   const { sessionId } = useParams();
@@ -40,16 +41,49 @@ const SessionPage = () => {
   const startCall = () => {
     const vapi = new Vapi(process.env.NEXT_PUBLIC_VAPI_API_KEY || "");
     setVapiInstance(vapi);
-    vapi.start(process.env.NEXT_PUBLIC_VAPI_VOICE_ASSISTANT_API_KEY);
+
+    if (!sessionDetails) {
+      return;
+    }
+
+    const vapiAgentConfig: CreateAssistantDTO = {
+      name: "AI Medical Voice Agent",
+      firstMessage:
+        "Hi there! I'm your AI Medical Assistant. I'm here to help you with any health questions or concerns you might have today. How are you feeling?",
+      transcriber: {
+        provider: "assembly-ai",
+        language: "en",
+      },
+      voice: {
+        provider: "vapi",
+        voiceId: sessionDetails.selectedAgent.voiceId,
+      },
+      model: {
+        provider: "google",
+        model: "gemini-2.5-flash",
+        messages: [
+          {
+            role: "system",
+            content: sessionDetails.selectedAgent.agentPrompt,
+          },
+        ],
+      },
+    };
+
+    vapi.start(vapiAgentConfig);
+
     vapi.on("call-start", () => {
       setCallStarted(true);
     });
+
     vapi.on("call-end", () => {
       setCallStarted(false);
     });
+
     vapi.on("message", (message) => {
       if (message.type === "transcript") {
         const { role, transcriptType, transcript } = message;
+
         if (transcriptType === "partial") {
           setLiveTranscript(transcript);
           setCurrentRole(role);
@@ -60,9 +94,11 @@ const SessionPage = () => {
         }
       }
     });
+
     vapi.on("speech-start", () => {
       setCurrentRole("Assistant");
     });
+
     vapi.on("speech-end", () => {
       setCurrentRole("User");
     });

@@ -1,4 +1,4 @@
-import { AIDoctorAgents } from "@/AIDoctorAgents";
+import { AIDoctorAgents } from "@/AIMedicalAgents";
 import DoctorAgentCard from "./DoctorAgentCard";
 
 const DoctorAgentList = () => {
