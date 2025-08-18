@@ -5,11 +5,11 @@ import Link from "next/link";
 const menuOptions = [
   {
     name: "Home",
-    link: "/",
+    link: "/dashboard",
   },
   {
     name: "History",
-    link: "/history",
+    link: "/dashboard/history",
   },
   {
     name: "Pricing",

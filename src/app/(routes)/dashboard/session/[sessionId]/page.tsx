@@ -4,13 +4,15 @@ import session from "@/types/session";
 import axios from "axios";
 import { Circle, Phone, PhoneOff } from "lucide-react";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Vapi from "@vapi-ai/web";
 import Message from "@/types/message";
 import { CreateAssistantDTO } from "@vapi-ai/web/dist/api";
+import { toast } from "sonner";
 
 const SessionPage = () => {
+  const router = useRouter();
   const { sessionId } = useParams();
   const [sessionDetails, setSessionDetails] = useState<session | undefined>(
     undefined
@@ -22,6 +24,7 @@ const SessionPage = () => {
     undefined
   );
   const [messages, setMessages] = useState<Message[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const getSessionDetails = async () => {
     try {
@@ -104,12 +107,29 @@ const SessionPage = () => {
     });
   };
 
-  const endCall = () => {
+  const endCall = async () => {
+    setLoading(true);
     if (!vapiInstance) return;
+    await generateReport();
     vapiInstance.stop();
     vapiInstance.removeAllListeners();
     setCallStarted(false);
     setVapiInstance(undefined);
+    setLiveTranscript(undefined);
+    setCurrentRole(undefined);
+    setMessages([]);
+    setLoading(false);
+    toast.success("Report Generated!");
+    router.push("/dashboard");
+  };
+
+  const generateReport = async () => {
+    const response = await axios.post("/api/generate-report", {
+      messages: messages,
+      sessionDetails: sessionDetails,
+      sessionId: sessionId,
+    });
+    return response.data;
   };
 
   return (
@@ -153,12 +173,18 @@ const SessionPage = () => {
           </div>
 
           {!callStarted ? (
-            <Button className="mt-12" onClick={startCall}>
-              <Phone /> Start Session
+            <Button className="mt-12" onClick={startCall} disabled={loading}>
+              {loading ? <Circle className="animate-spin" /> : <Phone />}
+              Start Session
             </Button>
           ) : (
-            <Button className="mt-12" variant="destructive" onClick={endCall}>
-              <PhoneOff />
+            <Button
+              className="mt-12"
+              variant="destructive"
+              onClick={endCall}
+              disabled={loading}
+            >
+              {loading ? <Circle className="animate-spin" /> : <PhoneOff />}
               End Session
             </Button>
           )}

@@ -1,4 +1,5 @@
 import Agent from "./agent";
+import Report from "./report";
 
 interface session {
   id: number;
@@ -6,7 +7,7 @@ interface session {
   details: string;
   selectedAgent: Agent;
   conversation: JSON;
-  report: JSON;
+  report: Report;
   createdOn: string;
   createdBy: string;
 }

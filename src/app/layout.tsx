@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import "@/assets/styles/globals.css";
 import Provider from "./provider";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "DocAI",
@@ -17,7 +18,10 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body>
-          <Provider>{children}</Provider>
+          <Provider>
+            {children}
+            <Toaster />
+          </Provider>
         </body>
       </html>
     </ClerkProvider>
