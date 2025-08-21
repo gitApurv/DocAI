@@ -13,7 +13,7 @@ const menuOptions = [
   },
   {
     name: "Pricing",
-    link: "/pricing",
+    link: "/dashboard/billing",
   },
   {
     name: "Profile",
