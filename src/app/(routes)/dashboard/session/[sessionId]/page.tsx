@@ -25,6 +25,7 @@ const SessionPage = () => {
   );
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
+  const voiceId = sessionDetails?.selectedAgent.voiceId || "";
 
   const getSessionDetails = async () => {
     try {
@@ -59,7 +60,7 @@ const SessionPage = () => {
       },
       voice: {
         provider: "vapi",
-        voiceId: sessionDetails.selectedAgent.voiceId,
+        voiceId: voiceId,
       },
       model: {
         provider: "google",
