@@ -1,13 +1,34 @@
+"use client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Agent from "@/types/agent";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import { auth } from "@clerk/nextjs/server";
+import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@clerk/clerk-react";
 
-const DoctorAgentCard = async ({ agent }: { agent: Agent }) => {
-  const { has } = await auth();
-  const hasPremiumAccess = has({ plan: "pro" });
+const DoctorAgentCard = ({ agent }: { agent: Agent }) => {
+  const { has } = useAuth();
+  const hasPremiumAccess = has && has({ plan: "pro" });
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
+
+  const handleStartConsultation = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post("/api/session-chat", {
+        details: "New Session",
+        agent,
+      });
+      router.push(`/dashboard/session/${response.data.sessionId}`);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="relative">
@@ -25,7 +46,8 @@ const DoctorAgentCard = async ({ agent }: { agent: Agent }) => {
       <p className="line-clamp-2 text-sm text-gray-500">{agent.description}</p>
       <Button
         className="w-full mt-3"
-        disabled={agent.subscriptionRequired && !hasPremiumAccess}
+        disabled={loading || (agent.subscriptionRequired && !hasPremiumAccess)}
+        onClick={handleStartConsultation}
       >
         Start Consultation <ArrowRight />
       </Button>
