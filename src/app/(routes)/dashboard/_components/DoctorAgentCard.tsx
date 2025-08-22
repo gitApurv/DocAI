@@ -20,7 +20,7 @@ const DoctorAgentCard = ({ agent }: { agent: Agent }) => {
     try {
       const response = await axios.post("/api/session-chat", {
         details: "New Session",
-        agent,
+        selectedAgent: agent,
       });
       router.push(`/dashboard/session/${response.data.sessionId}`);
     } catch (error) {
