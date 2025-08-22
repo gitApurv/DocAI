@@ -24,33 +24,47 @@ const DoctorAgentCard = ({ agent }: { agent: Agent }) => {
       });
       router.push(`/dashboard/session/${response.data.sessionId}`);
     } catch (error) {
-      console.log(error);
+      console.error("Failed to start consultation:", error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="relative">
+    <div className="relative rounded-2xl border shadow-sm bg-white p-4 hover:shadow-md transition">
       {agent.subscriptionRequired && (
-        <Badge className="absolute m-1 p-1 right-0">Premium</Badge>
+        <Badge className="absolute top-3 right-3 bg-yellow-500 text-white">
+          Premium
+        </Badge>
       )}
-      <Image
-        src={agent.image}
-        alt={agent.specialist}
-        width={250}
-        height={250}
-        className="w-full h-[250px] object-cover rounded-xl"
-      />
-      <h2 className="font-bold text-xl mt-2">{agent.specialist}</h2>
-      <p className="line-clamp-2 text-sm text-gray-500">{agent.description}</p>
-      <Button
-        className="w-full mt-3"
-        disabled={loading || (agent.subscriptionRequired && !hasPremiumAccess)}
-        onClick={handleStartConsultation}
-      >
-        Start Consultation <ArrowRight />
-      </Button>
+
+      <div className="flex flex-col items-center text-center">
+        <Image
+          src={agent.image}
+          alt={agent.specialist}
+          width={250}
+          height={250}
+          className="w-full h-[220px] object-cover rounded-xl"
+        />
+
+        <h2 className="font-bold text-lg mt-3 text-gray-900">
+          {agent.specialist}
+        </h2>
+        <p className="line-clamp-2 text-sm text-gray-600 mt-1">
+          {agent.description}
+        </p>
+
+        <Button
+          className="w-full mt-4"
+          disabled={
+            loading || (agent.subscriptionRequired && !hasPremiumAccess)
+          }
+          onClick={handleStartConsultation}
+        >
+          {loading ? "Starting..." : "Start Consultation"}
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 };

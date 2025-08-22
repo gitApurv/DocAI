@@ -7,9 +7,10 @@ import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Vapi from "@vapi-ai/web";
+
 import Message from "@/types/message";
-import { CreateAssistantDTO } from "@vapi-ai/web/dist/api";
 import { toast } from "sonner";
+import { CreateAssistantDTO } from "@vapi-ai/web/dist/api";
 
 const SessionPage = () => {
   const router = useRouter();
@@ -25,6 +26,7 @@ const SessionPage = () => {
   );
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
+  const [elapsedTime, setElapsedTime] = useState<number>(0);
 
   const getSessionDetails = async () => {
     try {
@@ -41,13 +43,31 @@ const SessionPage = () => {
     getSessionDetails();
   }, [sessionId]);
 
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (callStarted) {
+      interval = setInterval(() => {
+        setElapsedTime((prev) => prev + 1);
+      }, 1000);
+    } else {
+      setElapsedTime(0);
+    }
+    return () => clearInterval(interval);
+  }, [callStarted]);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, "0");
+    const secs = (seconds % 60).toString().padStart(2, "0");
+    return `${mins}:${secs}`;
+  };
+
   const startCall = () => {
+    if (!sessionDetails) return;
+
     const vapi = new Vapi(process.env.NEXT_PUBLIC_VAPI_API_KEY || "");
     setVapiInstance(vapi);
-
-    if (!sessionDetails) {
-      return;
-    }
 
     const vapiAgentConfig: CreateAssistantDTO = {
       name: "AI Medical Voice Agent",
@@ -59,7 +79,7 @@ const SessionPage = () => {
       },
       voice: {
         provider: "vapi",
-        voiceId: sessionDetails.selectedAgent.voiceId as any,
+        voiceId: (sessionDetails.selectedAgent.voiceId as any) || undefined,
       },
       model: {
         provider: "google",
@@ -109,18 +129,25 @@ const SessionPage = () => {
 
   const endCall = async () => {
     setLoading(true);
-    if (!vapiInstance) return;
-    await generateReport();
-    vapiInstance.stop();
-    vapiInstance.removeAllListeners();
-    setCallStarted(false);
-    setVapiInstance(undefined);
-    setLiveTranscript(undefined);
-    setCurrentRole(undefined);
-    setMessages([]);
-    setLoading(false);
-    toast.success("Report Generated!");
-    router.push("/dashboard");
+    try {
+      if (vapiInstance) {
+        await generateReport();
+        vapiInstance.stop();
+        vapiInstance.removeAllListeners();
+      }
+      setCallStarted(false);
+      setVapiInstance(undefined);
+      setLiveTranscript(undefined);
+      setCurrentRole(undefined);
+      setMessages([]);
+      toast.success("Report Generated!");
+      router.push("/dashboard");
+    } catch (err) {
+      toast.error("Error ending session!");
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const generateReport = async () => {
@@ -141,17 +168,19 @@ const SessionPage = () => {
               callStarted ? "bg-green-500" : "bg-red-500"
             }`}
           />
-          {!callStarted && "Not"} Connected
+          {callStarted ? "Connected" : "Not Connected"}
         </h2>
-        <h2 className="font-bold text-xl text-gray-400">00:00</h2>
+        <h2 className="font-bold text-xl text-gray-400">
+          {formatTime(elapsedTime)}
+        </h2>
       </div>
       {sessionDetails && (
         <div className="flex items-center flex-col mt-12">
           <Image
             src={sessionDetails.selectedAgent.image}
             alt={sessionDetails.selectedAgent.specialist}
-            width={120}
-            height={120}
+            width={200}
+            height={200}
             className="h-[200px] w-[200px] rounded-full object-cover"
           />
           <h2 className="mt-2 text-lg">
@@ -159,14 +188,14 @@ const SessionPage = () => {
           </h2>
           <p className="text-sm text-gray-400">AI Medical Voice Agent</p>
 
-          <div className="mt-12 overflow-y-auto flex flex-col items-center px-10 md:px-28 lg:px-52 xl:px-72">
+          <div className="mt-12 overflow-y-auto flex flex-col items-center px-10 md:px-28 lg:px-52 xl:px-72 max-h-[250px]">
             {messages.slice(-4).map((message, index) => (
               <h2 className="text-gray-400" key={index}>
                 {message.role} : {message.message}
               </h2>
             ))}
             {liveTranscript && (
-              <h2 className="text-lg">
+              <h2 className="text-lg font-semibold">
                 {currentRole} : {liveTranscript}
               </h2>
             )}

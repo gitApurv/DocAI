@@ -10,7 +10,7 @@ export default function HomePage() {
   const { user } = useUser();
 
   return (
-    <div className="relative flex  flex-col items-center justify-center">
+    <div className="relative flex flex-col items-center justify-center">
       <Navbar />
       <div className="absolute inset-y-0 left-0 h-full w-px bg-neutral-200/80 dark:bg-neutral-800/80">
         <div className="absolute top-0 h-40 w-px bg-gradient-to-b from-transparent via-blue-500 to-transparent" />
@@ -88,13 +88,13 @@ const Navbar = () => {
 
   return (
     <nav className="flex w-full items-center justify-between border-t border-b border-neutral-200 px-10 md:px-20 py-4 dark:border-neutral-800 shadow-md">
-      <div className="flex items-center gap-2">
+      <Link href="/" className="flex items-center gap-2">
         <Image src="/images/Logo.png" alt="Logo" width={50} height={50} />
         <h1 className="text-base font-bold md:text-2xl">
           <span className="text-blue-950 mr-1">Doc</span>
           <span className="text-green-500">AI</span>
         </h1>
-      </div>
+      </Link>
       {!user ? (
         <Link href="/sign-in">
           <Button className="cursor-pointer">Login</Button>

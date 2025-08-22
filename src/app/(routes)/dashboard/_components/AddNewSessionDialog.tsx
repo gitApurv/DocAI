@@ -39,7 +39,7 @@ export function AddNewSessionDialog() {
       });
       router.push(`/dashboard/session/${response.data.sessionId}`);
     } catch (error) {
-      console.log(error);
+      console.error("Failed to start consultation:", error);
     } finally {
       setLoading(false);
     }
@@ -48,12 +48,10 @@ export function AddNewSessionDialog() {
   const handleNext = async () => {
     setLoading(true);
     try {
-      const response = await axios.post("/api/suggest-agent", {
-        details,
-      });
+      const response = await axios.post("/api/suggest-agent", { details });
       setSuggestedAgents(response.data);
     } catch (error) {
-      console.log(error);
+      console.error("Failed to fetch suggested agents:", error);
     } finally {
       setLoading(false);
     }
@@ -61,7 +59,6 @@ export function AddNewSessionDialog() {
 
   const getHistoryList = async () => {
     const response = await axios.get("/api/session-chat?sessionId=all");
-    console.log(response.data);
     setHistoryList(response.data);
   };
 
@@ -79,17 +76,20 @@ export function AddNewSessionDialog() {
           + Consult With Doctor
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           {!suggestedAgents ? (
             <>
               <DialogTitle>Add Basic Details</DialogTitle>
               <DialogDescription asChild>
-                <div>
-                  <h2>Add symptoms and other basic details to get started.</h2>
+                <div className="mt-2">
+                  <p className="text-gray-600">
+                    Describe your symptoms and basic concerns to get matched
+                    with the right AI specialist.
+                  </p>
                   <Textarea
-                    placeholder="Add details here..."
-                    className="h-[200px] mt-2"
+                    placeholder="e.g., I have been experiencing headaches and dizziness for the past week..."
+                    className="h-[180px] mt-3"
                     value={details}
                     onChange={(e) => setDetails(e.target.value)}
                   />
@@ -99,7 +99,10 @@ export function AddNewSessionDialog() {
           ) : (
             <div>
               <h2 className="font-bold text-2xl">Suggested Doctor Agents</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-5">
+              <p className="text-sm text-gray-600 mt-1">
+                Based on your symptoms, here are the recommended specialists:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
                 {suggestedAgents.map((agent, index) => (
                   <SuggestedDoctorAgentCard
                     key={index}
@@ -109,20 +112,33 @@ export function AddNewSessionDialog() {
                   />
                 ))}
               </div>
+              {!selectedAgent && (
+                <p className="text-sm text-red-500 mt-3">
+                  Please select a doctor to continue.
+                </p>
+              )}
             </div>
           )}
         </DialogHeader>
-        <DialogFooter className="flex justify-between">
+
+        <DialogFooter className="flex justify-between sticky bottom-0 bg-white pt-3 border-t">
           <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline" disabled={loading}>
+              Cancel
+            </Button>
           </DialogClose>
           {!suggestedAgents ? (
             <Button disabled={!details || loading} onClick={handleNext}>
-              Next
               {loading ? (
-                <Loader2Icon className="animate-spin" />
+                <>
+                  Processing...
+                  <Loader2Icon className="animate-spin ml-2" />
+                </>
               ) : (
-                <ArrowRightIcon />
+                <>
+                  Next
+                  <ArrowRightIcon className="ml-2" />
+                </>
               )}
             </Button>
           ) : (
@@ -130,11 +146,16 @@ export function AddNewSessionDialog() {
               onClick={handleStartConsultation}
               disabled={loading || !selectedAgent}
             >
-              Start Consultation
               {loading ? (
-                <Loader2Icon className="animate-spin" />
+                <>
+                  Starting...
+                  <Loader2Icon className="animate-spin ml-2" />
+                </>
               ) : (
-                <ArrowRightIcon />
+                <>
+                  Start Consultation
+                  <ArrowRightIcon className="ml-2" />
+                </>
               )}
             </Button>
           )}

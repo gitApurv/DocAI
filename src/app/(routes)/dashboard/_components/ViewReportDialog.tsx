@@ -26,9 +26,7 @@ const ViewReportDialog = ({ report }: { report: Report }) => {
           </DialogTitle>
         </DialogHeader>
 
-        {/* Scrollable content */}
         <div className="mt-6 max-h-[70vh] overflow-y-auto pr-2 space-y-5 text-gray-700">
-          {/* Session Info */}
           <div className="border rounded-xl p-4 shadow-sm">
             <h3 className="font-semibold text-blue-600 text-lg mb-2">
               Session Info
@@ -47,7 +45,6 @@ const ViewReportDialog = ({ report }: { report: Report }) => {
             </div>
           </div>
 
-          {/* Chief Complaint */}
           <div className="border rounded-xl p-4 shadow-sm">
             <h3 className="font-semibold text-blue-600 text-lg mb-2">
               Chief Complaint
@@ -55,7 +52,6 @@ const ViewReportDialog = ({ report }: { report: Report }) => {
             <p>{report.chiefComplaint}</p>
           </div>
 
-          {/* Summary */}
           <div className="border rounded-xl p-4 shadow-sm">
             <h3 className="font-semibold text-blue-600 text-lg mb-2">
               Summary
@@ -63,7 +59,6 @@ const ViewReportDialog = ({ report }: { report: Report }) => {
             <p>{report.summary}</p>
           </div>
 
-          {/* Symptoms */}
           <div className="border rounded-xl p-4 shadow-sm">
             <h3 className="font-semibold text-blue-600 text-lg mb-2">
               Symptoms
@@ -75,7 +70,6 @@ const ViewReportDialog = ({ report }: { report: Report }) => {
             </ul>
           </div>
 
-          {/* Duration and Severity */}
           <div className="border rounded-xl p-4 shadow-sm">
             <h3 className="font-semibold text-blue-600 text-lg mb-2">
               Duration & Severity
@@ -90,7 +84,6 @@ const ViewReportDialog = ({ report }: { report: Report }) => {
             </div>
           </div>
 
-          {/* Medications */}
           <div className="border rounded-xl p-4 shadow-sm">
             <h3 className="font-semibold text-blue-600 text-lg mb-2">
               Medications Mentioned
@@ -102,7 +95,6 @@ const ViewReportDialog = ({ report }: { report: Report }) => {
             </ul>
           </div>
 
-          {/* Recommendations */}
           <div className="border rounded-xl p-4 shadow-sm">
             <h3 className="font-semibold text-blue-600 text-lg mb-2">
               Recommendations
