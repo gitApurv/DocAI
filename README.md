@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🩺 DocAI
 
-## Getting Started
+<p align="center"> <img src="https://res.cloudinary.com/cloudapurv/image/upload/v1755890077/sb4vg8rnrulpzn1tzjuh.png" alt="DocAI Banner"> </p> <p align="center"> <strong>AI-powered medical chat assistant SaaS.</strong> <br /> Talk, listen, and interact with a specialist AI assistant --- with subscription plans for individuals & professionals. </p>
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- 🎙️ **Audio Chat with AI Specialist** -- Real-time medical Q&A via voice.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 📝 **Chat Reports** -- Export/download detailed reports of your sessions.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 🗣️ **Live Transcription (AssemblyAI)** -- Instant speech-to-text during conversations.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- 🔊 **Text-to-Audio (Vapi)** -- AI responses in lifelike voices.
 
-## Learn More
+- 🔐 **Authentication & Billing (Clerk)** -- Secure login, subscription billing, and access control.
 
-To learn more about Next.js, take a look at the following resources:
+- 💳 **Subscription Plans** -- Free tier + Pro tier with premium features.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 🗄️ **NeonDB (Postgres) + Drizzle ORM** -- Scalable data storage.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- 📊 **Usage Tracking** -- Manage plan limits (e.g., chat minutes, report exports).
 
-## Deploy on Vercel
+⚠️ **Disclaimer**: DocAI provides **educational and informational assistance only**. It is **not a replacement for professional medical care**.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠️ Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Framework**: Next.js (frontend + backend via API routes/server actions)
+
+- **Styling**: Tailwind CSS, shadcn/ui
+
+- **Database**: NeonDB (Postgres) with Drizzle ORM
+
+- **Authentication + Billing**: Clerk (user auth, subscription management, payments)
+
+- **AI / Integrations**:
+
+  - GEMINI API (AI medical assistant)
+
+  - AssemblyAI (speech-to-text transcription)
+
+  - Vapi (text-to-speech audio responses)
+
+- **Deployment**: Vercel
