@@ -10,6 +10,26 @@ import {
 import Report from "@/types/report";
 
 const ViewReportDialog = ({ report }: { report: Report }) => {
+  if (!report)
+    return (
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline" className="rounded-xl shadow-md px-4 py-2">
+            View Report
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="max-w-2xl rounded-2xl p-6 shadow-xl">
+          <DialogHeader>
+            <DialogTitle asChild>
+              <h2 className="font-extrabold text-center text-2xl text-gray-800">
+                Report Not Found
+              </h2>
+            </DialogTitle>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    );
+
   return (
     <Dialog>
       <DialogTrigger asChild>
