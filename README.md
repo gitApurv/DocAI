@@ -6,7 +6,7 @@
 
 - 🎙️ **Audio Chat with AI Specialist** -- Real-time medical Q&A via voice.
 
-- 📝 **Chat Reports** -- Export/download detailed reports of your sessions.
+- 📝 **Chat Reports** -- Generate detailed reports of your sessions.
 
 - 🗣️ **Live Transcription (AssemblyAI)** -- Instant speech-to-text during conversations.
 
@@ -18,7 +18,7 @@
 
 - 🗄️ **NeonDB (Postgres) + Drizzle ORM** -- Scalable data storage.
 
-- 📊 **Usage Tracking** -- Manage plan limits (e.g., chat minutes, report exports).
+- 📊 **Usage Tracking** -- Manage plan limits (e.g., chat numbers, report generations).
 
 ⚠️ **Disclaimer**: DocAI provides **educational and informational assistance only**. It is **not a replacement for professional medical care**.
 
