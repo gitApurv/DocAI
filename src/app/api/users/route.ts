@@ -29,7 +29,6 @@ export async function POST(req: NextRequest) {
         .values({
           name: user?.fullName ?? "Unknown",
           email,
-          credits: 10,
         })
         .returning();
       return NextResponse.json(result[0]);
