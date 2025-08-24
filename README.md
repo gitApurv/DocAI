@@ -1,26 +1,43 @@
 # 🩺 DocAI
 
-<p align="center"> <img src="https://res.cloudinary.com/cloudapurv/image/upload/v1755890077/sb4vg8rnrulpzn1tzjuh.png" alt="DocAI Banner"> </p> <p align="center"> <strong>AI-powered medical chat assistant SaaS.</strong> <br /> Talk, listen, and interact with a specialist AI assistant --- with subscription plans for individuals & professionals. </p>
+DocAI is an AI-powered medical assistant platform designed to streamline healthcare interactions. It integrates **voice agents, real-time speech recognition, AI doctor suggestions, and a powerful dashboard** to help users manage medical sessions, generate reports, and interact with AI-driven healthcare tools.
+
 
 ## 🚀 Features
 
-- 🎙️ **Audio Chat with AI Specialist** -- Real-time medical Q&A via voice.
+-   **🤖 AI Medical Agents**
 
-- 📝 **Chat Reports** -- Generate detailed reports of your sessions.
+    -   Integrated multiple medical voice agents for intelligent healthcare conversations.
 
-- 🗣️ **Live Transcription (AssemblyAI)** -- Instant speech-to-text during conversations.
+    -   Gemini-powered AI doctor for smart suggestions and guidance.
 
-- 🔊 **Text-to-Audio (Vapi)** -- AI responses in lifelike voices.
+-   **🎤 Real-Time Voice & Speech**
 
-- 🔐 **Authentication & Billing (Clerk)** -- Secure login, subscription billing, and access control.
+    -   Vapi.ai + Assembly.ai for real-time speech-to-text and text-to-speech conversion.
 
-- 💳 **Subscription Plans** -- Free tier + Pro tier with premium features.
+    -   Session-specific voiceId management for personalized experiences.
 
-- 🗄️ **NeonDB (Postgres) + Drizzle ORM** -- Scalable data storage.
+-   **📊 Dashboard & Reports**
 
-- 📊 **Usage Tracking** -- Manage plan limits (e.g., chat numbers, report generations).
+    -   Interactive dashboard with history tracking and report generation.
 
-⚠️ **Disclaimer**: DocAI provides **educational and informational assistance only**. It is **not a replacement for professional medical care**.
+    -   Error handling, loading states, and improved UI components.
+
+    -   Premium badge and session history checks in doctor agent cards.
+
+-   **📱 Mobile-Friendly UI**
+
+    -   Enhanced dashboard header with mobile menu support.
+
+    -   Modern responsive layout and refined homepage structure.
+
+-   **🔐 Authentication & Access**
+
+    -   Clerk integration for user authentication and management.
+
+    -   Premium access checks for exclusive features.
+
+-   ⚠️ **Disclaimer**: DocAI provides **educational and informational assistance only**. It is **not a replacement for professional medical care**.
 
 ## 🛠️ Tech Stack
 
