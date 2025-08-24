@@ -1,60 +1,63 @@
 # 🩺 DocAI
 
-DocAI is an AI-powered medical assistant platform designed to streamline healthcare interactions. It integrates **voice agents, real-time speech recognition, AI doctor suggestions, and a powerful dashboard** to help users manage medical sessions, generate reports, and interact with AI-driven healthcare tools.
+DocAI is an **AI-powered medical assistant SaaS platform** that leverages **voice agents, real-time speech recognition, AI doctor suggestions, and a powerful dashboard** to simplify healthcare interactions.
+
+Users can **subscribe securely with Clerk billing** to access premium AI-driven healthcare features, generate medical reports, and manage session histories.
 
 
-## 🚀 Features
+## ✨ Key Features
 
--   **🤖 AI Medical Agents**
+- 🤖 AI Medical Agents
 
-    -   Integrated multiple medical voice agents for intelligent healthcare conversations.
+    -   Multiple **AI-powered medical voice agents** for real-time consultations.
 
-    -   Gemini-powered AI doctor for smart suggestions and guidance.
+    -   **Gemini-powered AI Doctor** for personalized medical guidance.     
 
--   **🎤 Real-Time Voice & Speech**
+- 🎤 Real-Time Voice & Speech
 
-    -   Vapi.ai + Assembly.ai for real-time speech-to-text and text-to-speech conversion.
+    -   **AssemblyAI** for speech-to-text transcription.
+
+    -   **Vapi.ai** for text-to-speech AI responses.    
 
     -   Session-specific voiceId management for personalized experiences.
 
--   **📊 Dashboard & Reports**
+- 📊 Dashboard & Reports
 
-    -   Interactive dashboard with history tracking and report generation.
+    -   Interactive **session history** and **report generation**.
 
-    -   Error handling, loading states, and improved UI components.
+    -   Improved **error handling** and **loading states**.
 
-    -   Premium badge and session history checks in doctor agent cards.
 
--   **📱 Mobile-Friendly UI**
+- 📱 Mobile-First Experience
 
-    -   Enhanced dashboard header with mobile menu support.
+    -   Optimized dashboard header with **mobile menu**.
 
-    -   Modern responsive layout and refined homepage structure.
+    -   Modern, responsive UI with **refined homepage layout**.
 
--   **🔐 Authentication & Access**
+- 🔐 Authentication & Billing
 
-    -   Clerk integration for user authentication and management.
+    -   **Clerk integration** for authentication, subscription management, and payments.
 
-    -   Premium access checks for exclusive features.
+    -   Role-based access to premium SaaS features.
 
--   ⚠️ **Disclaimer**: DocAI provides **educational and informational assistance only**. It is **not a replacement for professional medical care**.
+⚠️ **Disclaimer:** *DocAI is for **educational and informational purposes only**. It does **not replace professional medical advice or treatment**.*
 
 ## 🛠️ Tech Stack
 
-- **Framework**: Next.js (frontend + backend via API routes/server actions)
+-   **Framework:** Next.js (frontend + backend API routes/server actions)
 
-- **Styling**: Tailwind CSS, shadcn/ui
+-   **Styling:** Tailwind CSS, shadcn/ui
 
-- **Database**: NeonDB (Postgres) with Drizzle ORM
+-   **Database:** NeonDB (Postgres) + Drizzle ORM
 
-- **Authentication + Billing**: Clerk (user auth, subscription management, payments)
+-   **Auth & Billing:** Clerk (authentication, subscriptions, payments)
 
-- **AI / Integrations**:
+-   **AI Integrations:**
 
-  - GEMINI API (AI medical assistant)
+    -   Gemini API → AI medical assistant
 
-  - AssemblyAI (speech-to-text transcription)
+    -   AssemblyAI → Speech-to-text transcription
 
-  - Vapi (text-to-speech audio responses)
+    -   Vapi.ai → Text-to-speech conversion
 
-- **Deployment**: Vercel
+-   **Deployment:** Vercel
